@@ -1,0 +1,38 @@
+name: Update source index
+
+# 每次往 sources/ 或生成脚本推送改动时，自动重新生成 index.json 并提交回仓库。
+# 网页 (nexhub-app/website) 只读取 index.json，因此新增源后无需改网页代码。
+on:
+  push:
+    branches: [main]
+    paths:
+      - "sources/**"
+      - "scripts/generate_index.js"
+  workflow_dispatch:
+
+# 允许 Action 把更新后的 index.json 提交回仓库
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Generate index.json
+        run: node scripts/generate_index.js
+        env:
+          RAW_BASE: https://cdn.jsdelivr.net/gh/nexhub-app/sources@main
+
+      - name: Commit index.json
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: auto-update source index"
+          file_pattern: "index.json"
