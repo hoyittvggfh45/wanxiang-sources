@@ -16,7 +16,7 @@
  *              网页用 RAW_BASE + id + ".json" 拼导入链接，天然落到正确子目录。
  *
  * 运行：node scripts/generate_index.js
- * 可选环境变量 RAW_BASE 覆盖原始文件根地址（默认 nexhub-app/sources@main）。
+ * 可选环境变量 RAW_BASE 覆盖原始文件根地址（默认 hoyittvggfh45/wanxiang-sources@main）。
  */
 
 const fs = require("fs");
@@ -26,7 +26,7 @@ const ROOT = path.resolve(__dirname, "..");
 const SOURCES_DIR = path.join(ROOT, "sources");
 const OUT_FILE = path.join(ROOT, "index.json");
 const RAW_BASE =
-  process.env.RAW_BASE || "https://cdn.jsdelivr.net/gh/nexhub-app/sources@main";
+  process.env.RAW_BASE || "https://cdn.jsdelivr.net/gh/hoyittvggfh45/wanxiang-sources@main";
 
 const ALLOWED_CATEGORIES = ["manga", "media", "novel"];
 
